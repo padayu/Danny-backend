@@ -22,7 +22,7 @@ func InitManager(server *api.WebSocketServer) {
 
 func (m *Manager) CreateGame(lobby lobby.Lobby) {
 	var players = make([]*Player, 0)
-	DannyIndex := rand.Intn(len(players))
+	DannyIndex := rand.Intn(len(lobby.Members))
 	for index, m := range lobby.Members {
 		players = append(players, &Player{
 			Name:       m.Name,
