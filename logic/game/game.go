@@ -39,6 +39,9 @@ func (g *Game) StartGame() {
 
 func (g *Game) StartTurn() {
 	g.stage = CardPlacement
+	g.wordOptions = GenerateWordOptions()
+	wordIndex := rand.Intn(len(g.wordOptions))
+	g.word = g.wordOptions[wordIndex]
 	g.BroadcastServerMessage("Объяснение слова началось")
 
 	activePlayer := g.GetActivePlayer()
@@ -62,16 +65,6 @@ func (g *Game) StartVoteWord() {
 	}
 
 	g.BroadcastState()
-}
-
-func (g *Game) DrawCardFromMainDeck() *card.Memory {
-	if len(g.mainDeck) == 0 {
-		return nil
-	}
-
-	building := g.mainDeck[0]
-	g.mainDeck = g.mainDeck[1:]
-	return &building
 }
 
 func (g *Game) ReturnCardToMainDeck(card card.Memory) {
